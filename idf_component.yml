@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.0.1"
 description: "Driver passive buzzer berbasis LEDC dengan pola tone bawaan dan urutan tone kustom untuk ESP-IDF."
 url: "https://github.com/wahyu-widodo-dev/buzzer"
 repository: "https://github.com/wahyu-widodo-dev/buzzer"
