@@ -341,11 +341,17 @@ esp_err_t Buzzer::set_output(uint32_t frequency_hz, bool enabled)
     }
 
     if (enabled) {
-        if (frequency_hz == 0 ||
-            ledc_set_freq(config_.speed_mode, config_.timer, frequency_hz) == 0) {
-            ESP_LOGE(TAG, "LEDC tidak dapat mengatur frekuensi %u Hz",
-                     static_cast<unsigned>(frequency_hz));
+        if (frequency_hz == 0) {
+            ESP_LOGE(TAG, "Frekuensi tone harus lebih besar dari nol");
             return ESP_ERR_INVALID_ARG;
+        }
+        const esp_err_t frequency_err =
+            ledc_set_freq(config_.speed_mode, config_.timer, frequency_hz);
+        if (frequency_err != ESP_OK) {
+            ESP_LOGE(TAG, "LEDC gagal mengatur frekuensi %u Hz: %s",
+                     static_cast<unsigned>(frequency_hz),
+                     esp_err_to_name(frequency_err));
+            return frequency_err;
         }
     }
 
